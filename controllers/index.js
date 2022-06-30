@@ -1,10 +1,5 @@
-// //generate 10 random numbers
-
-
-
-// //return error is number is less than 500
-
 const Account = require("../models/account");
+const accountNumber = require("../lib/tenDigit");
 const CustomError = require("../lib/error");
 const responseHandler = require("../utils/responseHandler");
 const { validationResult, body } = require("express-validator");
@@ -13,41 +8,35 @@ const { jwtSign } = require("../lib/ath");
 
 
 exports.create_account = async (req, res, next) => {
-    const { accountname, deposit, password, accountnumber } = req.body;
+    const { accountname, deposit, password } = req.body;
     try {
         const result = validationResult(req);
         if (!result.isEmpty()) {
             throw new CustomError().check_input();
         }
-        if (accountname && deposit && password && accountnumber) {
+        if (accountname && deposit && password) {
             let userExist = await Account.findOne({ accountname: accountname });
             if (userExist) {
                 throw new CustomError(
-                    `Accountname ${accountname} already exist, try another one.`,
+                    `Account name ${accountname} already exist, try another one.`,
                     400
                 );
-            }
-            const myNumber = () => {
-                return Math.floor(Math.random() * 10);
             };
-
-            const deposit = (number) => {
-                if (number < 500) {
-                    return 'error';
-                }
-            };
-
             const hashedPassword = await passwordHash(password);
-            const user = new User({
+            const user = new Account({
                 accountname: accountname,
                 deposit: deposit,
                 password: hashedPassword,
-                accountnumber: myNumber,
+                accountnumber: accountNumber,
             });
 
     await user.save();
-            return responseHandler(res, 200, "User account created succesfully.");
-
+            return res.status(200).json({
+                message: "Account created succesfully",
+                code: 200,
+                status: "success",
+                accountNumber,
+            });
         } else {
             throw new CustomError().invalid_parameter();
         }

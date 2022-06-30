@@ -3,9 +3,7 @@ require('dotenv').config();
 const express = require('express');
 logger = require('morgan');
 const app = express();
-// const userRoute = require('./routes/users');
-
-
+const accountRoute = require('./routes/index');
 
 
 //middleware
@@ -15,7 +13,7 @@ app.use(express.json());
 
 
 // //api routes
-// app.use('/v1', userRoute);
+app.use('/v1', accountRoute);
 
 
 app.get("/", (req, res) => {
