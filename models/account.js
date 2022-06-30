@@ -13,10 +13,13 @@ const usersSchema = new mongoose.Schema({
         required: true,
     },
     deposit: {
-        type: String,
+        type: Number,
         required: true,
     },
 
 }, { timestamps: true });
 
 module.exports = mongoose.model('accounts', usersSchema);
+
+
+

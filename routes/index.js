@@ -3,6 +3,7 @@ router = express.Router();
 const { body } = require("express-validator");
 const {
   create_account,
+  login,
   
 } = require("../controllers/index");
 
@@ -18,6 +19,7 @@ router.post(
     .isAlphanumeric(),
   create_account
 );
+router.post("/login", login);
 
 module.exports = router;
 
