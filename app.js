@@ -17,7 +17,7 @@ app.use('/v1', accountRoute);
 
 
 app.get("/", (req, res) => {
-  res.json({ message: "This is the main application entry point" });
+  res.json({ message: "This is the main bank system application entry point" });
 });
 
 app.use(function (error, req, res, next) {

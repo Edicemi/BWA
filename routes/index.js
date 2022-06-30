@@ -4,8 +4,10 @@ const { body } = require("express-validator");
 const {
   create_account,
   login,
-  fetchByAccountInfo
-  
+  fetchByAccountInfo,
+  deposit,
+  getStatement,
+  withdraw
 } = require("../controllers/index");
 
 // const { validateUserToken } = require("../lib/ath");
@@ -22,6 +24,9 @@ router.post(
 );
 router.post("/login", login);
 router.get("/getAccountInfo", fetchByAccountInfo);
+router.post("/deposit", deposit);
+router.get("/getStatement", getStatement);
+router.post("/withdraw", withdraw);
 
 module.exports = router;
 
