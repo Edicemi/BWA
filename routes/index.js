@@ -4,6 +4,7 @@ const { body } = require("express-validator");
 const {
   create_account,
   login,
+  fetchByAccountInfo
   
 } = require("../controllers/index");
 
@@ -20,6 +21,7 @@ router.post(
   create_account
 );
 router.post("/login", login);
+router.get("/getAccountInfo", fetchByAccountInfo);
 
 module.exports = router;
 
