@@ -163,9 +163,15 @@ exports.getStatement = async (req, res, next) => {
 exports.withdraw = async (req, res, next) => {
     try {
         const { accountnumber, withdraw } = req.body;
-        const user = await Account.findOne({ accountnumber: accountnumber });
+        const user = await Account.findOne({ accountnumber: accountnumber});
         if (user) {
             const newDeposit = user.deposit - withdraw;
+            if (newDeposit < 500) {
+               throw new CustomError(
+                   ` Bad Request. You should have at least 500 in your account.`,
+                   400
+               );
+            }
             const updatedUser = await Account.findOneAndUpdate({ accountnumber: accountnumber }, { deposit: newDeposit });
             return res.status(200).json({
                 status: "success",

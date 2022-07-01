@@ -26,7 +26,7 @@ router.post("/login", login);
 router.get("/getAccountInfo", fetchByAccountInfo);
 router.post("/deposit", deposit);
 router.get("/getStatement", getStatement);
-router.post("/withdraw", withdraw);
+router.get("/withdraw", withdraw);
 
 module.exports = router;
 
