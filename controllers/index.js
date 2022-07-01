@@ -24,7 +24,7 @@ exports.create_account = async (req, res, next) => {
             };
             if (deposit < 500) {
                 throw new CustomError(
-                    `Deposit should be greater than 500`,
+                    ` Initial deposit should be greater than 500`,
                     400
                 );
             }
