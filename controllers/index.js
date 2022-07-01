@@ -109,6 +109,12 @@ exports.deposit = async (req, res, next) => {
     try {
         const { accountnumber, deposit } = req.body;
         const user = await Account.findOne({ accountnumber: accountnumber });
+        if (deposit > 1000000 || deposit < 100) {
+            throw new CustomError(
+                ` Bad Request. Deposit should be greater than 100 and less than 1000000`,
+                400
+            );
+        }
         if (user) {
             const newDeposit = user.deposit + deposit;
             const updatedUser = await Account.findOneAndUpdate({ accountnumber: accountnumber }, { deposit: newDeposit });
@@ -132,12 +138,17 @@ exports.getStatement = async (req, res, next) => {
         const { accountnumber } = req.body;
         const user = await Account.findOne({ accountnumber: accountnumber });
         if (user) {
-            const account = await Account.find().select(["accountname", "deposit", "accountnumber", "-createdAt"]);
             return res.status(200).json({
                 status: "success",
                 message: 'Account Info fetched succesfully',
                 accountType: "deposit",
-                account,
+                user_id: user._id,
+                accountname: user.accountname,
+                accountnumber: user.accountnumber,
+                deposit: user.deposit,
+                Transactiondate: user.createdAt
+
+                
             });
         } else {
             throw Error('Invalid account number or password',
