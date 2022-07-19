@@ -10,7 +10,7 @@ const {
   withdraw
 } = require("../controllers/index");
 
-// const { validateUserToken } = require("../lib/ath");
+const { validateUserToken } = require("../lib/ath");
 
 // route for authentication
 router.post(
@@ -23,10 +23,10 @@ router.post(
   create_account
 );
 router.post("/login", login);
-router.get("/getAccountInfo", fetchByAccountInfo);
-router.post("/deposit", deposit);
-router.get("/getStatement", getStatement);
-router.get("/withdraw", withdraw);
+router.get("/getAccountInfo", validateUserToken, fetchByAccountInfo);
+router.post("/deposit", validateUserToken, deposit);
+router.get("/getStatement", validateUserToken, getStatement);
+router.get("/withdraw", validateUserToken, withdraw);
 
 module.exports = router;
 
