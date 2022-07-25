@@ -175,7 +175,7 @@ exports.withdraw = async (req, res, next) => {
             const updatedUser = await Account.findOneAndUpdate({ accountnumber: accountnumber }, { deposit: newDeposit });
             return res.status(200).json({
                 status: "success",
-                message: 'Withdraw successful',
+                message: 'Withdraw Done Successfully',
                 deposit: newDeposit,
             });
         } else {
